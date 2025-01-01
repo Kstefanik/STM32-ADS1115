@@ -79,16 +79,14 @@ int main(void)
 
   adc.set_gain(ks::PGA_6_144);
   adc.set_data_rate(ks::DR_860);
-  adc.set_mux(ks::A0_GND);
-  //adc.set_ADS_mode(ks::CONTINUOUS);
+  adc.set_ADS_mode(ks::CONTINUOUS);
   
   float voltage;
 
   while (1)
   {
-    voltage = adc.read_digital(ks::A0_GND) * 6.144 / 32768.0;
-
-    //voltage = adc.read_diff_0_1() * 6.144 / 32768.0;
+    //voltage = adc.read_voltage(ks::A0_GND);
+    voltage = adc.read_voltage(ks::A0_A1) * 1000;
 
     sprintf(buf, " %f\r\n", voltage);
     HAL_UART_Transmit(&huart2, (uint8_t*)buf, strlen(buf), HAL_MAX_DELAY);

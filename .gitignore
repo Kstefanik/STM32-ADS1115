@@ -31,6 +31,12 @@
 *.out
 *.app
 
+#Local files
+STM32Make.make
+STM32-for-VSCode.config.yaml
+openocd.cfg
+.stm32env
+
 # Directories
 build/
 .vscode/
