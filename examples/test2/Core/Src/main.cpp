@@ -51,13 +51,6 @@ static void MX_USART2_UART_Init(void);
 
 char buf1[50];
 
-void print_serial(float value)
-{
-  sprintf(buf1, "%f\r\n", value);
-  HAL_UART_Transmit(&huart2, (uint8_t*)buf1, strlen(buf1), HAL_MAX_DELAY);
-  HAL_Delay(500);
-}
-
 int main(void)
 {
   char buf[50];
@@ -75,18 +68,17 @@ int main(void)
   MX_I2C1_Init();
   MX_USART2_UART_Init();
 
-  ks::ADS1115 adc(ks::ADDR_0x48, hi2c1);
+  ks::ADS1115 adc(ADDR_0x48, hi2c1);
 
-  adc.set_gain(ks::PGA_6_144);
-  adc.set_data_rate(ks::DR_860);
-  adc.set_ADS_mode(ks::CONTINUOUS);
-  
+  adc.set_gain(PGA_6_144);
+  adc.set_data_rate(DR_860);
+  adc.set_ADS_mode(CONTINUOUS);
+
   float voltage;
 
   while (1)
   {
-    //voltage = adc.read_voltage(ks::A0_GND);
-    voltage = adc.read_voltage(ks::A0_A1) * 1000;
+    voltage = adc.read_voltage(A0_GND);
 
     sprintf(buf, " %f\r\n", voltage);
     HAL_UART_Transmit(&huart2, (uint8_t*)buf, strlen(buf), HAL_MAX_DELAY);
