@@ -188,6 +188,10 @@ namespace ks
          * 
          * For indepth information on ADS1115 configuration refer to the datasheet
          */
+        
+        /**
+         * CONFIG REGISTER
+         */
 
         /**
          * Sets the OS bit, which triggers the single shot conversion
@@ -217,6 +221,13 @@ namespace ks
 
         void set_comp_que(COMP_QUE comp_que);
         COMP_QUE get_comp_que();
+
+        /**
+         * THRESH REGISTERS
+         */
+        void set_low_threshold(int16_t threshold);
+
+        void set_high_threshold(int16_t threshold);
         
         /**
          * Uploads the configuration to ADS1115 via i2c
@@ -245,6 +256,8 @@ namespace ks
          * Variale used for reading stuff(converted value) from ADS1115 via i2c
          */
         unsigned char m_ADS_read[2];
+
+        unsigned char m_ADS_write_thresh[3];
 
         /**
          * I2C handle used by ADS1115 instance

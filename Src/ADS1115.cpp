@@ -490,6 +490,22 @@ namespace ks
         return m_comp_que;
     }
 
+    void ADS1115::set_low_threshold(int16_t threshold)
+    {
+        m_ADS_write_thresh[0] = 0x02;
+        m_ADS_write_thresh[1] = (threshold >> 8) & 0xFF;
+        m_ADS_write_thresh[2] = threshold & 0xFF;
+        HAL_I2C_Master_Transmit(&m_i2c_handle, m_address<<1, m_ADS_write_thresh, 3, 100);
+    }
+
+    void ADS1115::set_high_threshold(int16_t threshold)
+    {
+        m_ADS_write_thresh[0] = 0x03;
+        m_ADS_write_thresh[1] = (threshold >> 8) & 0xFF;
+        m_ADS_write_thresh[2] = threshold & 0xFF;
+        HAL_I2C_Master_Transmit(&m_i2c_handle, m_address<<1, m_ADS_write_thresh, 3, 100);
+    }
+
     void ADS1115::upload_config()
     {
         m_ADS_write[0] = 0x01;
@@ -500,11 +516,7 @@ namespace ks
     }
 
     int16_t ADS1115::get_conversion()
-    {
-        m_ADS_write[0] = 0x00;
-        HAL_I2C_Master_Transmit(&m_i2c_handle, m_address<<1, m_ADS_write, 1, 100);
-        HAL_Delay(20);
-
+    {   
         HAL_I2C_Master_Receive(&hi2c1, m_address<<1, m_ADS_read, 2, 100);
         m_reading = m_ADS_read[0] << 8 | m_ADS_read[1];
         if(m_reading < 0)
