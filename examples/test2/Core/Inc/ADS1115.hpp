@@ -27,7 +27,7 @@
 /**
  * This library was written for STM32F3(NUCLEO-F303RE board to be exact),
  * But the HAL functions used by it should be common between other STM32 versions
- * So you should be able to externd the library support to other STM32 mcus by
+ * So you should be able to extend the library support to other STM32 mcus by
  * including a different hal library.
  */
 #include "stm32f3xx_hal.h"
@@ -53,7 +53,6 @@ enum ADDR
 /**
  * Enums defining avaiable configuration options(bits of the configuration register)
  */
-
 enum OS
 {
     START_CONV,
@@ -218,10 +217,6 @@ namespace ks
 
         void set_comp_que(COMP_QUE comp_que);
         COMP_QUE get_comp_que();
-
-        //TODO: void set_low_threshold();
-
-        //TODO: void set_high_threshold();
         
         /**
          * Uploads the configuration to ADS1115 via i2c
