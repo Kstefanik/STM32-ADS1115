@@ -68,11 +68,23 @@ int main(void)
   MX_I2C1_Init();
   MX_USART2_UART_Init();
 
+  /**
+   * Create ADS1115 object
+   */
   ks::ADS1115 adc(ADDR_0x48, hi2c1);
 
+  /**
+   * Set the configuration
+   */
   adc.set_gain(PGA_6_144);
   adc.set_data_rate(DR_860);
   adc.set_ADS_mode(CONTINUOUS);
+  adc.set_comp_polarity(ACTIVE_LOW);
+  adc.set_comp_latch(LATCHING);
+  adc.set_comp_mode(WINDOW);
+  adc.set_comp_que(ASSERT_AFTER_1_CONV);
+  adc.set_low_threshold(8000);    //8000 = 1.5 V
+  adc.set_high_threshold(12000);  //12000 = 2.25 V
 
   float voltage;
 
